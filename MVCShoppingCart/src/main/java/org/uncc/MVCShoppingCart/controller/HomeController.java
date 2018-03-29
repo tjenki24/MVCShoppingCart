@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
@@ -25,17 +26,28 @@ public class HomeController {
 		return model;
 	}
 	
-	@RequestMapping(value="/addProduct", method = RequestMethod.GET)
+	@RequestMapping(value="/NewProduct", method = RequestMethod.GET)
 	public ModelAndView newProduct(ModelAndView model) {
 		Product newProduct = new Product();
 		model.addObject("product", newProduct);
-		model.setViewName("AddProduct");
+		model.setViewName("NewProduct");
 		return model;
 	}
 	
 	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
-	public ModelAndView saveProduct(@ModelAttribute Product product) {
+	public ModelAndView saveProduct(ModelMap model, @RequestParam int id, @RequestParam String name, @RequestParam String price, @RequestParam String description, @RequestParam String image) {
+		Product product = new Product();
+		product.setId(id);
+		product.setName(name);
+		product.setPrice(price);
+		product.setDescription(description);
+		product.setImage(image);
 		productDAO.saveOrUpdate(product);
+		model.addAttribute(id);
+		model.addAttribute(name);
+		model.addAttribute(price);
+		model.addAttribute(description);
+		model.addAttribute(image);
 		return new ModelAndView("redirect:/");
 	}
 	

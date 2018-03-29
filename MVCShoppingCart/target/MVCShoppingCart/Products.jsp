@@ -12,17 +12,19 @@
 		<h1>All Products</h1>
 		<table border="1">
 			<tr>
+				<td>Number</td>
 				<td>Name</td>
 				<td>Price</td>
 				<td>Description</td>
 				<td>Image</td>
 			</tr>
-			<c:forEach var="product" items="${listProduct }" varStatus="status">
+			<c:forEach var="product" items="${listProduct}" varStatus="status">
 			<tr>
-			<td>${product.name }</td>
-			<td>${product.price }</td>
-			<td>${product.description }</td>
-			<td>${product.image }</td>
+			<td>${status.index + 1}</td>
+			<td>${product.name}</td>
+			<td>${product.price}</td>
+			<td>${product.description}</td>
+			<td>${product.image}</td>
 			</tr>
 			</c:forEach>
 		</table>
